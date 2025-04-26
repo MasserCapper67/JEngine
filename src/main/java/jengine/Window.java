@@ -61,6 +61,7 @@ public class Window {
         glfwSetCursorPosCallback(window, MouseListener::mousePositionCallback);
         glfwSetMouseButtonCallback(window, MouseListener::mouseButtonCallback);
         glfwSetScrollCallback(window, MouseListener::mouseScrollCallback);
+        glfwSetKeyCallback(window, KeyListener::keyCallback);
 
         glfwMakeContextCurrent(window);
 
