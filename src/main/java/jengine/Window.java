@@ -58,6 +58,10 @@ public class Window {
             throw new RuntimeException("Failed to create the GLFW window");
         }
 
+        glfwSetCursorPosCallback(window, MouseListener::mousePositionCallback);
+        glfwSetMouseButtonCallback(window, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(window, MouseListener::mouseScrollCallback);
+
         glfwMakeContextCurrent(window);
 
         // Enables V-Sync
