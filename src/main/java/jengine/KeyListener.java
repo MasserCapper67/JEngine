@@ -25,6 +25,4 @@ public class KeyListener {
     public static boolean isKeyPressed(int key) {
         return getInstance().keyPressed[key];
     }
-
-
 }
