@@ -14,12 +14,32 @@ public class Window {
     private int width, height;
     private String title;
     private long window;
-    private static Window instance;
+    private static Window instance = null;
+    private static Scene currentScene = null;
+    public float r, g, b, a;
 
     private Window() {
         this.width = 1920;
         this.height = 1080;
         this.title = "jengine";
+        this.r = 1.0f;
+        this.g = 1.0f;
+        this.b = 1.0f;
+        this.a = 1.0f;
+    }
+
+    public static void changeScene(Integer newSceneIndex) {
+        switch (newSceneIndex) {
+            case 0:
+                currentScene = new LevelEditorScene();
+                break;
+            case 1:
+                currentScene = new LevelScene();
+                break;
+            default:
+                assert false : "Unknown scene " + newSceneIndex;
+                break;
+        }
     }
 
     public static Window get() {
@@ -75,23 +95,29 @@ public class Window {
     private void loop() {
         float beginTime = Time.getTime();
         float endTime = Time.getTime();
+        float dt = -1.0f;
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
         // LWJGL detects the context that is current in the current thread,
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
-        glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+        Window.changeScene(0);
 
         while (!glfwWindowShouldClose(window)) {
+            glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            if (dt >= 0.0f) {
+                currentScene.update(dt);
+            }
 
             glfwSwapBuffers(window);
 
             glfwPollEvents();
 
             endTime = Time.getTime();
-            float dt = endTime - beginTime;
+            dt = endTime - beginTime;
             beginTime = endTime;
         }
     }
