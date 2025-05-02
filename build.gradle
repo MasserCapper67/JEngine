@@ -20,7 +20,13 @@ test {
 
 project.ext.lwjglVersion = "3.3.6"
 project.ext.jomlVersion = "1.10.7"
-project.ext.lwjglNatives = "natives-windows"
+def os = org.gradle.internal.os.OperatingSystem.current()
+project.ext.lwjglNatives = {
+    if (os.isWindows()) return "natives-windows"
+    if (os.isLinux()) return "natives-linux"
+    if (os.isMacOsX()) return "natives-macos"
+    throw new GradleException("Unsupported OS: ${os.name}")
+}()
 
 dependencies {
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")

@@ -56,7 +56,7 @@ public class LevelEditorScene extends Scene {
         // 1- Load and compile the vertex shader
         vertexID = glCreateShader(GL_VERTEX_SHADER);
 
-        // 2- Pass the shader source to the GPU
+        // 2- /home/masserPass the shader source to the GPU
         glShaderSource(vertexID, vertexShaderSrc);
         glCompileShader(vertexID);
 
